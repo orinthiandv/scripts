@@ -31,7 +31,7 @@ end
 
 local function createTool()
     local tool = Instance.new("Tool")
-    tool.Name = "Noclip Tool"
+    tool.Name = "Noclip"
     tool.RequiresHandle = false
     tool.CanBeDropped = false
     tool.Parent = player:WaitForChild("Backpack")
