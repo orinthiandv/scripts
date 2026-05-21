@@ -1,0 +1,27 @@
+local Players = game:GetService("Players")
+local RunService = game:GetService("RunService")
+
+local localPlayer = Players.LocalPlayer
+local MAX_VELOCITY = 200
+local lastSafePosition = nil
+
+RunService.Heartbeat:Connect(function()
+    local character = localPlayer.Character
+    if not character then return end
+
+    local hrp = character:FindFirstChild("HumanoidRootPart")
+    local humanoid = character:FindFirstChild("Humanoid")
+    if not hrp or not humanoid then return end
+    if humanoid.Health <= 0 then return end
+
+    local vel = hrp.AssemblyLinearVelocity
+    if vel.Magnitude > MAX_VELOCITY then
+        if lastSafePosition then
+            hrp.CFrame = CFrame.new(lastSafePosition)
+            hrp.AssemblyLinearVelocity = Vector3.zero
+            hrp.AssemblyAngularVelocity = Vector3.zero
+        end
+    else
+        lastSafePosition = hrp.Position
+    end
+end)
